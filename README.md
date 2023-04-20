@@ -33,7 +33,7 @@ We use HDFS, BGL, Spirit and Thunderbird datasets.
 Original datasets are accessed from [LogHub](https://github.com/logpai/loghub) project.
 (We do not provide generated log representations as they are in huge size. Please generate them with our codes provided.)
 
-Due to computational limitations, we utilized subsets of the Spirit and Thunderbird datasets in our experiments. These subsets are available for access at [Zenodo](https://doi.org/10.5281/zenodo.3227177).
+Due to computational limitations, we utilized subsets of the Spirit and Thunderbird datasets in our experiments. These subsets are available for access at [Zenodo](https://doi.org/10.5281/zenodo.7851024).
 
 ### Extra regular expression parsed to the Drain parser
 
