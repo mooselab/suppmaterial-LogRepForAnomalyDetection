@@ -29,11 +29,13 @@ We recommend using an Anaconda environment with Python version 3.9, and followin
 ## Dataset
 
 ### Source
-We use HDFS and BGL datasets. 
-Datasets are accessed from [LogHub](https://github.com/logpai/loghub) project.
+We use HDFS, BGL, Spirit and Thunderbird datasets. 
+Original datasets are accessed from [LogHub](https://github.com/logpai/loghub) project.
 (We do not provide generated log representations as they are in huge size. Please generate them with our codes provided.)
 
-### Extra regular expression parsed to the Drain parser to process BGL dataset
+Due to computational limitations, we utilized subsets of the Spirit and Thunderbird datasets in our experiments. These subsets are available for access at [Zenodo](https://doi.org/10.5281/zenodo.3227177).
+
+### Extra regular expression parsed to the Drain parser
 
 We used Drain to parse the studied datasets. We adopted the default parameters from the following paper for parsing.
 
@@ -43,6 +45,7 @@ Pinjia He, Jieming Zhu, Zibin Zheng, and Michael R. Lyu. Drain: An Online Log Pa
 
 However, Drain parser generated too much templates with the default setting due to the failure of spotting some dynamic fields. We passed the following regular expression to reduce the amount.
 
+For BGL dataset:
 ```
 regex      = [r'core\.\d+',
               r'(?<=r)\d{1,2}',
@@ -60,6 +63,34 @@ regex      = [r'core\.\d+',
               ]
 ```
 
+For Spirit dataset:
+```
+regex      = [r'^\d+$',  #only numbers
+              r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}[^0-9]',   # IP address
+              r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',   # MAC address
+              r'\d{14}(.)[0-9A-Z]{10,}',   # message id
+              r'(?<=@#)(?<=#)\d+',   #  message id special format
+              r'[0-9A-Z]{10,}', # id
+              r'(?<=:|=)(\d|\w+)(?=>|,| |$|\\)'   # parameter after:|=
+             ]
+```
+
+For Thunderbird dataset:
+
+```
+regex      = [
+             r'(\d+\.){3}\d+',
+             r'((a|b|c|d)n(\d){2,}\ ?)+', # a|b|c|dn+number
+             r'\d{14}(.)[0-9A-Z]{10,}@tbird-#\d+#', # message id
+             r'(?![0-9]+\W)(?![a-zA-Z]+\W)(?<!_|\w)[0-9A-Za-z]{8,}(?!_)',      # char+numbers,
+             r'(/|)([0-9]+\.){3}[0-9]+(:[0-9]+|)(:|)', # ip address
+             r'\d{8,}',   # numbers + 8
+             r'(?<=:)(\d+)(?= )',    # parameter after :
+             r'(?<=pid=)(\d+)(?= )',   # pid=XXXXX
+             r'(?<=Lustre: )(\d+)(?=:)', # Lustre:
+             r'(?<=,)(\d+)(?=\))'
+             ]
+```
 
 ## Experiments
 
