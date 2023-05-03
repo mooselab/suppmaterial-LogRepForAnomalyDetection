@@ -1,5 +1,5 @@
 # Log Representation - Supplimental Materials
-The repository contains the detailed results and replication package for the paper "On the Effectiveness of Log Representation for Automated Log Analysis".
+The repository contains the detailed results and replication package for the paper "On the Effectiveness of Log Representation for Log-based Anomaly Detection".
 
 
 ## Introduction
